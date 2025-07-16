@@ -1,15 +1,15 @@
+"use client"
+
 import * as React from 'react';
 import {cn} from "@/libs/utils";
-import {PomodoroTaskItem} from "@/types/pomodoro_task";
 import TaskItem from "@/components/pomodoro_tasks/TaskItem/TaskItem";
+import {useTaskStore} from "@/stores/pomodoro_task_store";
 
 type Props = {
-    tasks?: PomodoroTaskItem[],
 };
 
-const TaskList = ({
-                  tasks
-                }: Props) => {
+const TaskList = (props: Props) => {
+    const tasks = useTaskStore((state) => state.tasks);
 
     return (
         <div className={cn("flex flex-col items-center")}>

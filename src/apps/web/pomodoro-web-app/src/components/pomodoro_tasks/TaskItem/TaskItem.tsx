@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import {cn} from "@/libs/utils";
-import {PomodoroTaskItem} from "@/types/pomodoro_task";
+import {PomodoroTask} from "@/types/pomodoro_task";
 import TaskItemControls from "@/components/pomodoro_tasks/TaskItemControls/TaskItemControls";
 
 type Props = {
-    task: PomodoroTaskItem,
+    task: PomodoroTask,
 };
 
 const TaskItem = ({

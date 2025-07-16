@@ -1,9 +1,6 @@
 export type PomodoroTask = {
+    id: string;
     category: string;
     description: string;
-}
-
-export type PomodoroTaskItem = PomodoroTask & {
-    id: number;
     count: number;
 }
