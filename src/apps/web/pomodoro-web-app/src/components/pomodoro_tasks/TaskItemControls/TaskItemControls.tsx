@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {cn} from "@/libs/utils";
 import {Button} from "@/components/ui/button";
+import {TaskActionsMenu} from "@/components/pomodoro_tasks/TaskActionsMenu/TaskActionsMenu";
 import { MoreHorizontal } from "lucide-react";
 
 type Props = {
@@ -21,11 +22,17 @@ const TaskItemControls = ({
             >
                 {taskCount}
             </Button>
-            <Button variant="ghost"
-                    className={cn("border border-black/30 bg-white w-10 h-9 text-2xl flex items-center",
-                                    "justify-center leading-none")} >
-                <MoreHorizontal className="w-5 h-5" />
-            </Button>
+
+            <TaskActionsMenu taskCount={taskCount} setTaskCount={setTaskCount}>
+                <Button
+                    variant="ghost"
+                    className={cn(
+                        "border border-black/30 bg-white w-10 h-9 text-2xl flex items-center justify-center leading-none"
+                    )}
+                >
+                    <MoreHorizontal className="w-5 h-5" />
+                </Button>
+            </TaskActionsMenu>
         </div>
     );
 };
