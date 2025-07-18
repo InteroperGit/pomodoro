@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {cn} from "@/libs/utils";
 import TaskItem from "@/components/pomodoro_tasks/TaskItem/TaskItem";
-import {useTaskStore} from "@/stores/pomodoro_task_store";
+import {useTaskStore} from "@/stores/pomodoroTaskStore";
 
 type Props = {
 };

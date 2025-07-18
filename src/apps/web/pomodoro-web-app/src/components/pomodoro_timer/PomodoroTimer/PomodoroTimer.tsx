@@ -5,7 +5,7 @@ import {cn} from "@/libs/utils";
 import PomodoroClock from "@/components/pomodoro_timer/PomodoroClock/PomodoroClock";
 import PomodoroTask from "@/components/pomodoro_timer/PomodoroTask/PomodoroTask";
 import PomodoroControls from "@/components/pomodoro_timer/PomodoroControls/PomodoroControls";
-import {PomodoroTimerState} from "@/types/pomodoro_timer_state";
+import {PomodoroTimerState} from "@/types/pomodoroTimerState";
 
 type Props = {
     initTaskType?: PomodoroTaskType;

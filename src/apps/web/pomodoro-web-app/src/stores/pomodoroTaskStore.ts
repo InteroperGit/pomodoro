@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {PomodoroTask} from "@/types/pomodoro_task";
+import {PomodoroTask} from "@/types/pomodoroTask";
 
 type PomodoroTaskStore = {
     tasks: PomodoroTask[];

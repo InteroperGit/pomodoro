@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from "@/components/ui/button"
 import {cn} from "@/libs/utils";
-import {PomodoroTimerState} from "@/types/pomodoro_timer_state";
+import {PomodoroTimerState} from "@/types/pomodoroTimerState";
 
 type Props = {
     pomodoroTimerState: PomodoroTimerState,

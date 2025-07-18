@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import {cn} from "@/libs/utils";
 import {Button} from "@/components/ui/button";
 import { HiPlus } from "react-icons/hi";
-import { useTaskStore } from "@/stores/pomodoro_task_store";
+import { useTaskStore } from "@/stores/pomodoroTaskStore";
 
 type Props = {
 

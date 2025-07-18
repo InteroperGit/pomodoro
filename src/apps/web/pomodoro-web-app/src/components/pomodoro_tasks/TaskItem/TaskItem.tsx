@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {cn} from "@/libs/utils";
-import {PomodoroTask} from "@/types/pomodoro_task";
+import {PomodoroTask} from "@/types/pomodoroTask";
 import TaskItemControls from "@/components/pomodoro_tasks/TaskItemControls/TaskItemControls";
 
 type Props = {
