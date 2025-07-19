@@ -5,6 +5,7 @@ import {TaskActionsMenu} from "@/components/pomodoro_tasks/TaskActionsMenu/TaskA
 import { MoreHorizontal } from "lucide-react";
 
 type Props = {
+    taskId: string;
     taskCount: number,
     setTaskCount: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -20,6 +21,7 @@ type Props = {
  *    - Удаление задачи (ограничено минимальным количеством).
  *
  * Принимаемые пропсы:
+ * @param {string} taskId - идентификатор задачи
  * @param {number} taskCount — текущее количество задач, отображаемое на кнопке счётчика.
  * @param {React.Dispatch<React.SetStateAction<number>>} setTaskCount — функция для обновления количества задач, пробрасываемая вниз в дочерние компоненты.
  *
@@ -41,6 +43,7 @@ type Props = {
  * Этот компонент хорошо подходит для переиспользования в списке задач Pomodoro, сохраняя логику счётчика и дополнительного управления в компактной форме.
  */
 const TaskItemControls = ({
+                          taskId,
                           taskCount,
                           setTaskCount,
 }: Props) => {
@@ -54,7 +57,7 @@ const TaskItemControls = ({
                 {taskCount}
             </Button>
 
-            <TaskActionsMenu taskCount={taskCount} setTaskCount={setTaskCount}>
+            <TaskActionsMenu taskId={taskId} taskCount={taskCount} setTaskCount={setTaskCount}>
                 <Button
                     variant="ghost"
                     className={cn(

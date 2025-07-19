@@ -53,7 +53,7 @@ const TaskItem = ({
             <div className={cn("flex flex-row items-center cursor-pointer ")}>
                 <div className="w-[130px]">{task.category}</div>
                 <div className="flex-grow">{task.description}</div>
-                <TaskItemControls taskCount={taskCount} setTaskCount={setTaskCount} />
+                <TaskItemControls taskId={task.id} taskCount={taskCount} setTaskCount={setTaskCount} />
             </div>
         </div>
 
