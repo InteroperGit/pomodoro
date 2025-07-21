@@ -100,7 +100,7 @@ const PomodoroTimer = ({
     }, [pomodoroTimerState]);
 
     return (
-        <div className={cn("mt-10 rounded-md p-5", bgColor)}>
+        <div className={cn("rounded-md p-5", bgColor)}>
             <div>
                 <div className={cn("flex flex-col justify-around mx-auto w-xl bg-")}>
                     <PomodoroClock pomodoroTimeElapsed={pomodoroTimeElapsed} />
