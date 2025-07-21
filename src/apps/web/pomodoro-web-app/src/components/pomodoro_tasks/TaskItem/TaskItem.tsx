@@ -4,6 +4,7 @@ import * as React from 'react';
 import {cn} from "@/libs/utils";
 import {PomodoroTask} from "@/types/pomodoroTask";
 import TaskItemControls from "@/components/pomodoro_tasks/TaskItemControls/TaskItemControls";
+import {useTaskStore} from "@/stores/pomodoroTaskStore";
 
 type Props = {
     task: PomodoroTask,
@@ -47,6 +48,11 @@ const TaskItem = ({
     task
 }: Props) => {
     const [taskCount, setTaskCount] = React.useState(task.count);
+    const updateTaskCount = useTaskStore((state) => state.updateTaskCount);
+
+    React.useEffect(() => {
+        updateTaskCount(task.id, taskCount);
+    }, [taskCount]);
 
     return (
         <div className="hover:bg-gray-100 px-4 py-3">
@@ -56,7 +62,6 @@ const TaskItem = ({
                 <TaskItemControls taskId={task.id} taskCount={taskCount} setTaskCount={setTaskCount} />
             </div>
         </div>
-
     );
 };
 

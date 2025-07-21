@@ -11,6 +11,8 @@ type Props = {
 
 };
 
+const INIT_TASK_COUNT = 1;
+
 const TaskEditor = (props: Props) => {
     const [category, setCategory] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -22,7 +24,7 @@ const TaskEditor = (props: Props) => {
             return;
         }
 
-        addTask({ category, description, count: 0 });
+        addTask({ category, description, count: INIT_TASK_COUNT });
         setCategory("");
         setDescription("");
     }
