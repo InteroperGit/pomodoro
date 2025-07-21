@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import {PomodoroTask} from "@/types/pomodoroTask";
+import SettingsService from "@/services/settingsService";
 
 type PomodoroTaskStore = {
     tasks: PomodoroTask[];
@@ -10,7 +11,9 @@ type PomodoroTaskStore = {
     updateTaskCount: (id: string, taskCount: number) => void;
 }
 
-const TASK_PERIOD = 25;
+const settingsService = new SettingsService();
+
+const TASK_PERIOD = settingsService.getTaskPeriodMinutes();
 
 export const useTaskStore = create<PomodoroTaskStore>((set) => ({
     tasks: [],
