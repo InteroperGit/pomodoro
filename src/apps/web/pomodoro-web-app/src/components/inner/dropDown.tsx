@@ -95,7 +95,10 @@ export const DropDown: React.FC<DropDownProps> = ({ trigger, children }) => {
                             left: coords.left,
                             zIndex: 9999,
                         }}
-                        className="mt-2 w-40 rounded-lg shadow-lg border border-gray-200 bg-white"
+                        className="mt-2 w-40 rounded-lg shadow-lg border border-gray-200 bg-white
+                            transform transition-all duration-200 ease-out
+                            opacity-0 scale-95
+                            animate-dropdown"
                         onClick={e => e.stopPropagation()} // чтобы клики внутри меню не закрывали его
                     >
                         {children}

@@ -69,7 +69,6 @@ export const TaskActionsMenu: React.FC<TaskActionsMenuProps> = ({ taskId, taskCo
                 className={COMMON_BUTTON_STYLE}
                 onClick={(e) => {
                     e.stopPropagation();
-                    console.log('Добавить нажатие'); // для проверки срабатывания
                     setTaskCount(count => count + 1)
                 } }
             >
