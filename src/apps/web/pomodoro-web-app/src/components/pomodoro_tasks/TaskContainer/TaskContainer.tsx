@@ -3,6 +3,7 @@ import {cn} from "@/libs/utils";
 import TaskEditor from "@/components/pomodoro_tasks/TaskEditor/TaskEditor";
 import TaskList from "@/components/pomodoro_tasks/TaskList/TaskList";
 import TaskSummary from "@/components/pomodoro_tasks/TaskSummary/TaskSummary";
+import TaskCategoryList from "@/components/pomodoro_tasks/TaskCategoryList/TaskCategoryList";
 
 type Props = {
 };
@@ -18,10 +19,13 @@ const TaskContainer = (props: Props) => {
                 <TaskEditor />
             </div>
 
-            <div className="w-full">
+            <div className="w-full mb-5">
                 <TaskList />
             </div>
 
+            <div className="w-full">
+                <TaskCategoryList />
+            </div>
         </div>
     );
 };
