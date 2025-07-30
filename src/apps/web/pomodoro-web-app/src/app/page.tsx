@@ -6,6 +6,9 @@ import TaskContainer from "@/components/pomodoro_tasks/TaskContainer/TaskContain
 import {useTaskStore} from "@/stores/pomodoroTaskStore";
 import React from "react";
 import {PomodoroTask} from "@/types/pomodoroTask";
+import CompletedTaskContainer from "@/components/pomodoro_complete_tasks/CompletedTaskContainer/CompletedTaskContainer";
+import {CompletedPomodoroTask} from "@/types/completedPomodoroTask";
+import {useCompletedTaskStore} from "@/stores/completedPomodoroTaskStore";
 
 const initTasks: PomodoroTask[] = [{
     id: crypto.randomUUID(),
@@ -17,6 +20,18 @@ const initTasks: PomodoroTask[] = [{
     category: "test",
     description: "test2",
     count: 1,
+}];
+
+const initCompletedTasks: PomodoroTask[] = [{
+    id: crypto.randomUUID(),
+    category: "test",
+    description: "test",
+    count: 1
+}, {
+    id: crypto.randomUUID(),
+    category: "test",
+    description: "test2",
+    count: 1
 }]
 
 /**
@@ -49,17 +64,23 @@ const initTasks: PomodoroTask[] = [{
  */
 const Home = () => {
     const addTask = useTaskStore((state) => state.addTask);
+    const addCompletedTask = useCompletedTaskStore((state) => state.addTask);
 
     React.useEffect(() => {
         initTasks.map((task) => {
             addTask(task);
-        })
+        });
+
+        initCompletedTasks.map((task) => {
+            addCompletedTask(task, new Date(Date.now() - 25 * 60 * 1000));
+        });
     }, []);
 
     return (
       <div className={cn("max-w-6xl mx-auto p-5 flex flex-col gap-5")}>
           <PomodoroTimer />
           <TaskContainer />
+          <CompletedTaskContainer />
       </div>
     );
 }

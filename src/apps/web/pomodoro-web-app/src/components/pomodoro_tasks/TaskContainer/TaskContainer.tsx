@@ -10,16 +10,16 @@ type Props = {
 
 const TaskContainer = (props: Props) => {
     return (
-        <div className={cn("flex flex-col items-center")}>
-            <div className="w-full mb-5">
+        <div className={cn("flex flex-col items-center gap-5")}>
+            <div className="w-full">
                 <TaskSummary />
             </div>
 
-            <div className="w-full mb-5">
+            <div className="w-full">
                 <TaskEditor />
             </div>
 
-            <div className="w-full mb-5">
+            <div className="w-full">
                 <TaskList />
             </div>
 
