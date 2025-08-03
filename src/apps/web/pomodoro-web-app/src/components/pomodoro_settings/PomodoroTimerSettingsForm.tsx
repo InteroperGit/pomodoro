@@ -32,7 +32,20 @@ const settingsFormSchema = z.object({
         .min(1, { error: "Минимум 1 помидор" }),
 });
 
+const fieldData: { name: string, label: string, desc: string }[] = [
+    { name: 'pomodoroDuration', label: 'Продолжительность помидора', desc: 'в минутах' },
+    { name: 'shortBreak',       label: 'Продолжительность короткого перерыва', desc: 'в минутах' },
+    { name: 'longBreak',        label: 'Продолжительность длинного перерыва', desc: 'в минутах' },
+    { name: 'longBreakInterval',label: 'Длинный перерыв через каждые', desc: 'Количество помидоров' },
+];
+
 export type SettingsFormValues = z.infer<typeof settingsFormSchema>
+
+// Убираем ведущие нули, оставляя хотя бы одну цифру
+const stripLeadingZeros = (value: string) => {
+    // Regex: удаляем нули перед значащей цифрой
+    return value.replace(/^0+(?=\d)/, '');
+};
 
 type Props = {
 };
@@ -57,141 +70,64 @@ const PomodoroTimerSettingsForm = (props: Props) => {
     const watchedValues = form.watch();
 
     // вычисляем, вернулось ли всё в начальное состояние
-    const isPristine = React.useMemo(
+    const canSubmit = React.useMemo(
         () => (
-            equal(watchedValues, defaultValuesRef.current)
+            !equal(watchedValues, defaultValuesRef.current) && form.formState.isValid
         ),
-        [watchedValues]
+        [watchedValues, form.formState.isValid]
     );
+
+    // Хендлер для числовых инпутов с удалением ведущих нулей
+    const createNumberHandler = (field: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        let str = e.target.value;
+        str = stripLeadingZeros(str);
+        const val = str === '' ? 0 : parseInt(str, 10);
+        field.onChange(val);
+    };
 
     const onSubmit = (data: SettingsFormValues) => {
         const newSettings: PomodoroTimerSettings = data as PomodoroTimerSettings;
         saveTimerSettings(newSettings);
+
+        // Обновляем форму и исходные значения
+        form.reset(data);
+        defaultValuesRef.current = data;
     }
 
     return (
         <div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    {/* Продолжительность помидора */}
-                    <FormField
-                        control={form.control}
-                        name="pomodoroDuration"
-                        render={({ field }) => (
-                            <FormItem className="flex items-start space-x-2">
-                                <FormLabel className="m-0 mt-3 w-1/5">Продолжительность помидора</FormLabel>
-                                <div className="flex-1 flex flex-col gap-2">
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            min={1}
-                                            value={field.value}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                // Если строка пустая, сбрасываем значение в undefined,
-                                                // иначе тащим число из valueAsNumber
-                                                field.onChange(val === '' ? 0 : e.target.valueAsNumber);
-                                            }}
-                                            onBlur={field.onBlur}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>в минутах</FormDescription>
-                                </div>
-
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    {/* Продолжительность короткого перерыва */}
-                    <FormField
-                        control={form.control}
-                        name="shortBreak"
-                        render={({ field }) => (
-                            <FormItem className="flex items-start space-x-2">
-                                <FormLabel className="m-0 mt-2 w-1/5">Продолжительность короткого перерыва</FormLabel>
-                                <div className="flex-1 flex flex-col gap-2">
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            min={1}
-                                            value={field.value}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                // Если строка пустая, сбрасываем значение в undefined,
-                                                // иначе тащим число из valueAsNumber
-                                                field.onChange(val === '' ? 0 : e.target.valueAsNumber);
-                                            }}
-                                            onBlur={field.onBlur}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>в минутах</FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    {/* Продолжительность длинного перерыва */}
-                    <FormField
-                        control={form.control}
-                        name="longBreak"
-                        render={({ field }) => (
-                            <FormItem className="flex items-start space-x-2">
-                                <FormLabel className="m-0 mt-2 w-1/5">Продолжительность длинного перерыва</FormLabel>
-                                <div className="flex-1 flex flex-col gap-2">
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            min={1}
-                                            value={field.value}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                // Если строка пустая, сбрасываем значение в undefined,
-                                                // иначе тащим число из valueAsNumber
-                                                field.onChange(val === '' ? 0 : e.target.valueAsNumber);
-                                            }}
-                                            onBlur={field.onBlur}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>в минутах</FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    {/* Длинный перерыв через каждые */}
-                    <FormField
-                        control={form.control}
-                        name="longBreakInterval"
-                        render={({ field }) => (
-                            <FormItem className="flex items-start space-x-2">
-                                <FormLabel className="m-0 mt-3 w-1/5">Длинный перерыв через каждые</FormLabel>
-                                <div className="flex-1 flex flex-col gap-2">
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            min={1}
-                                            value={field.value}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                // Если строка пустая, сбрасываем значение в undefined,
-                                                // иначе тащим число из valueAsNumber
-                                                field.onChange(val === '' ? 0 : e.target.valueAsNumber);
-                                            }}
-                                            onBlur={field.onBlur}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>Количество помидоров</FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
+                    {fieldData.map(({ name, label, desc }) => (
+                        <FormField
+                            key={name}
+                            control={form.control}
+                            name={name as any}
+                            render={({ field }) => (
+                                <FormItem className="flex items-start space-x-2">
+                                    <FormLabel className="m-0 mt-3 w-1/5">{label}</FormLabel>
+                                    <div className="flex-1 flex flex-col gap-2">
+                                        <FormControl>
+                                            <Input
+                                                type="number"
+                                                min={1}
+                                                value={stripLeadingZeros(String(field.value)) ?? "0"}
+                                                onChange={createNumberHandler(field)}
+                                                onBlur={field.onBlur}
+                                            />
+                                        </FormControl>
+                                        <FormDescription>{desc}</FormDescription>
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    ))}
                     <div className="flex justify-end">
-                        <Button type="submit" variant={"outline"} disabled={isPristine}>Сохранить</Button>
+                        <Button type="submit" variant="outline" disabled={!canSubmit}>
+                            Сохранить
+                        </Button>
                     </div>
                 </form>
             </Form>
