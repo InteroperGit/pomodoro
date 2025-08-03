@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import {PomodoroTask} from "@/types/pomodoroTask";
-import SettingsService from "@/services/settingsService";
+import {getPomodoroSettingsService} from "@/services/localStoragePomodoroSettingsService";
 import {PomodoroTaskCategory} from "@/types/pomodoroTaskCategory";
 
 type PomodoroTaskStore = {
@@ -13,9 +13,9 @@ type PomodoroTaskStore = {
     updateTaskCount: (id: string, taskCount: number) => void;
 }
 
-const settingsService = new SettingsService();
+const settingsService = getPomodoroSettingsService();
 
-const TASK_PERIOD = settingsService.getTaskPeriodMinutes();
+const POMODORO_DURATION = settingsService.getTimerSettings().pomodoroDuration;
 
 export const useTaskStore = create<PomodoroTaskStore>((set) => ({
     tasks: [],
@@ -44,7 +44,7 @@ export const useTaskStore = create<PomodoroTaskStore>((set) => ({
                 tasks: tasks,
                 categories: categories,
                 taskCount: state.taskCount + 1,
-                totalTime: state.totalTime + TASK_PERIOD,
+                totalTime: state.totalTime + POMODORO_DURATION,
             }
         }),
     removeTask: (id: string) => {
@@ -74,7 +74,7 @@ export const useTaskStore = create<PomodoroTaskStore>((set) => ({
                 tasks: tasks,
                 categories: categories,
                 taskCount: state.taskCount - 1,
-                totalTime: state.totalTime - TASK_PERIOD,
+                totalTime: state.totalTime - POMODORO_DURATION,
             }
         });
     },
@@ -100,7 +100,7 @@ export const useTaskStore = create<PomodoroTaskStore>((set) => ({
                         : category
                 ),
                 taskCount: state.taskCount + calcTaskCount,
-                totalTime: state.totalTime + calcTaskCount * TASK_PERIOD,
+                totalTime: state.totalTime + calcTaskCount * POMODORO_DURATION,
             }
         });
     }

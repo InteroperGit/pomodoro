@@ -5,6 +5,7 @@ import Header from "@/components/header/Header/Header";
 import Footer from "@/components/footer/Footer/Footer";
 import Container from "@/components/containers/Container/Container";
 import {cn} from "@/libs/utils";
+import Bootstrap from "@/components/bootstrap/Bootstrap";
 
 export const metadata: Metadata = {
     title: "Pomodoro Tracker - удобное приложение для управления задачами",
@@ -24,25 +25,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`
-          antialiased 
-          flex
-          flex-col
-          min-h-screen
-          `
-      }
-      >
-        <Header />
-        <main className={cn("flex-grow")}>
-            <Container>
-                {children}
-            </Container>
-        </main>
-        <Footer />
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+          <body
+            className={`
+              antialiased 
+              flex
+              flex-col
+              min-h-screen
+              `
+          }
+          >
+            <Bootstrap />
+            <Header />
+            <main className={cn("flex-grow")}>
+                <Container>
+                    {children}
+                </Container>
+            </main>
+            <Footer />
+          </body>
+        </html>
+    );
 }

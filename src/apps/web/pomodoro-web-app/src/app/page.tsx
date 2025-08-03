@@ -1,37 +1,8 @@
-"use client";
-
 import {cn} from "@/libs/utils";
 import PomodoroTimer from "@/components/pomodoro_timer/PomodoroTimer/PomodoroTimer";
 import TaskContainer from "@/components/pomodoro_tasks/TaskContainer/TaskContainer";
-import {useTaskStore} from "@/stores/pomodoroTaskStore";
 import React from "react";
-import {PomodoroTask} from "@/types/pomodoroTask";
 import CompletedTaskContainer from "@/components/pomodoro_complete_tasks/CompletedTaskContainer/CompletedTaskContainer";
-import {useCompletedTaskStore} from "@/stores/completedPomodoroTaskStore";
-
-const initTasks: PomodoroTask[] = [{
-    id: crypto.randomUUID(),
-    category: "test",
-    description: "test",
-    count: 1,
-}, {
-    id: crypto.randomUUID(),
-    category: "test",
-    description: "test2",
-    count: 1,
-}];
-
-const initCompletedTasks: PomodoroTask[] = [{
-    id: crypto.randomUUID(),
-    category: "test",
-    description: "test",
-    count: 1
-}, {
-    id: crypto.randomUUID(),
-    category: "test",
-    description: "test2",
-    count: 1
-}]
 
 /**
  * Компонент Home является корневым компонентом клиентской страницы Pomodoro.
@@ -62,26 +33,8 @@ const initCompletedTasks: PomodoroTask[] = [{
  * - Для SSR можно перенести инициализацию данных в более высокий уровень, чтобы избежать зависимости от client-only сторов.
  */
 const Home = () => {
-    const addTask = useTaskStore((state) => state.addTask);
-    const addCompletedTask = useCompletedTaskStore((state) => state.addTask);
-    const tasks = useTaskStore((state) => state.tasks);
-
-    React.useEffect(() => {
-        if (tasks.length > 0) {
-            return;
-        }
-
-        initTasks.map((task) => {
-            addTask(task);
-        });
-
-        initCompletedTasks.map((task) => {
-            addCompletedTask(task, new Date(Date.now() - 25 * 60 * 1000));
-        });
-    }, [tasks.length]);
-
     return (
-      <div className={cn("max-w-6xl mx-auto p-5 flex flex-col gap-5")}>
+      <div className={cn("container max-w-6xl mx-auto p-5 flex flex-col gap-5")}>
           <PomodoroTimer />
           <TaskContainer />
           <CompletedTaskContainer />
